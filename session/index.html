@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Signature Session — Briana Cello</title>
+<meta name="description" content="Reserve the Signature Session — a first environmental harmonization within a space you already know. One space, performed remotely.">
+
+<!-- ============================================================
+     FONT PROXIES (build phase) — substitute licensed .woff2 on final:
+       Cormorant  → Ogg (Sharp Type)      · wordmark Light, hero Thin
+       Inter      → Suisse Int'l (Swiss)  · body / UI
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ANCHOR — single source of truth.
+   Flip A↔B here only; layout never changes.
+   A (launch) graphite  #3C4248
+   B (reserve) blue-night #28323F
+   ============================================================ */
+:root{
+  --anchor:#3C4248;              /* ← the one token */
+
+  --ivory:#F3EFE8;
+  --ivory-deep:#ECE6DB;
+  --stone:#E0D9CC;
+  --mineral:#8A8579;
+  --mineral-soft:#B4AEA1;
+  --ink:#2B2F33;
+  --bronze:#9C7B4F;             /* accent — kept to 1–3% of surface */
+  --bronze-soft:#B49468;
+  --on-anchor:#E9E3D7;
+  --on-anchor-dim:#9DA4A4;
+
+  --serif:'Cormorant', Georgia, serif;       /* Ogg proxy */
+  --sans:'Inter', system-ui, sans-serif;     /* Suisse Int'l proxy */
+
+  --maxw:1180px;
+  --gutter:clamp(1.5rem, 5vw, 5rem);
+  --section-y:clamp(6rem, 14vh, 11rem);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--ivory);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:clamp(1rem,0.55vw + 0.9rem,1.0625rem);
+  line-height:1.75;
+  letter-spacing:0.005em;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ---- type primitives ---- */
+.eyebrow{
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:0.6875rem;
+  letter-spacing:0.34em;
+  text-transform:uppercase;
+  color:var(--mineral);
+}
+.display{
+  font-family:var(--serif);
+  font-weight:300;
+  line-height:1.04;
+  letter-spacing:-0.01em;
+  color:var(--anchor);
+}
+.serif-lead{
+  font-family:var(--serif);
+  font-weight:300;
+  line-height:1.32;
+  letter-spacing:-0.005em;
+  color:var(--anchor);
+}
+em{font-style:italic}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.section{padding-block:var(--section-y)}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--stone) 18%,var(--stone) 82%,transparent)}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.35rem var(--gutter);
+  transition:background .5s ease, padding .5s ease, box-shadow .5s ease;
+}
+.nav.scrolled{
+  background:color-mix(in srgb, var(--ivory) 88%, transparent);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  padding-block:0.95rem;
+  box-shadow:0 1px 0 color-mix(in srgb,var(--stone) 70%,transparent);
+}
+.brand{
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:1.5rem;
+  letter-spacing:0.02em;
+  color:var(--anchor);
+  line-height:1;
+  white-space:nowrap;
+}
+.brand em{font-style:italic;font-weight:300}
+.nav-links{display:flex;align-items:center;gap:2.1rem}
+.nav-links a{
+  font-size:0.78rem;letter-spacing:0.1em;color:var(--ink);
+  position:relative;padding-block:.35rem;transition:color .3s;
+}
+.nav-links a.dormant{color:var(--mineral-soft)}
+.nav-links a:not(.btn)::after{
+  content:"";position:absolute;left:0;bottom:0;width:0;height:1px;
+  background:var(--bronze);transition:width .4s ease;
+}
+.nav-links a:not(.btn):hover{color:var(--anchor)}
+.nav-links a:not(.btn):hover::after{width:100%}
+
+.btn{
+  font-family:var(--sans);font-size:0.74rem;font-weight:400;
+  letter-spacing:0.14em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:.6em;
+  padding:0.85em 1.6em;border:1px solid var(--anchor);
+  color:var(--anchor);background:transparent;cursor:pointer;
+  transition:background .45s ease,color .45s ease,border-color .45s ease;
+  white-space:nowrap;
+}
+.btn:hover{background:var(--anchor);color:var(--on-anchor);border-color:var(--anchor)}
+.btn--solid{background:var(--anchor);color:var(--on-anchor)}
+.btn--solid:hover{background:transparent;color:var(--anchor)}
+.btn--ghost{border-color:var(--mineral);color:var(--ink)}
+.btn--ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--ivory)}
+.btn--small{padding:0.7em 1.3em;font-size:0.7rem}
+
+.nav-toggle{display:none;background:none;border:0;cursor:pointer;width:30px;height:22px;position:relative}
+.nav-toggle span{position:absolute;left:0;width:100%;height:1px;background:var(--anchor);transition:.35s}
+.nav-toggle span:nth-child(1){top:2px}
+.nav-toggle span:nth-child(2){top:10px}
+.nav-toggle span:nth-child(3){top:18px}
+.nav-toggle.open span:nth-child(1){top:10px;transform:rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){top:10px;transform:rotate(-45deg)}
+
+/* ============================================================
+   HERO — the one charged gesture: ascending Pegasus, stroke-drawn
+   ============================================================ */
+.hero{
+  position:relative;min-height:100svh;
+  display:grid;grid-template-columns:1.05fr 0.95fr;align-items:center;
+  gap:var(--gutter);
+  padding:clamp(7rem,16vh,10rem) var(--gutter) clamp(3rem,8vh,5rem);
+  max-width:var(--maxw);margin-inline:auto;
+}
+.hero-copy{position:relative;z-index:3;max-width:30rem}
+.hero h1{
+  font-family:var(--serif);font-weight:200;
+  font-size:clamp(2.9rem,6.4vw,5.4rem);
+  line-height:1.02;letter-spacing:-0.018em;color:var(--anchor);
+  margin-top:1.6rem;
+}
+.hero h1 em{font-style:italic}
+.hero .subline{
+  margin-top:1.9rem;max-width:25rem;color:var(--mineral);
+  font-size:1.02rem;line-height:1.7;
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.6rem}
+.hero-reassure{
+  margin-top:2.8rem;font-size:0.72rem;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--mineral-soft);
+  display:flex;align-items:center;gap:.8em;
+}
+.hero-reassure .dot{width:3px;height:3px;border-radius:50%;background:var(--bronze)}
+
+/* pegasus stage */
+.hero-figure{position:relative;z-index:2;align-self:stretch;display:flex;align-items:center;justify-content:center}
+.pegasus{width:min(100%,520px);height:auto;overflow:visible}
+.pegasus .stroke{
+  fill:none;stroke:var(--anchor);
+  stroke-width:1;stroke-linecap:round;stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+}
+.pegasus .hair{stroke-width:0.6;opacity:.55}
+.pegasus .ember{stroke:var(--bronze);opacity:.85;stroke-width:0.9}
+.pegasus .glow{stroke:var(--bronze);stroke-width:0.9;opacity:0}
+
+/* draw-on animation */
+.pegasus .draw{
+  stroke-dasharray:var(--len,1400);
+  stroke-dashoffset:var(--len,1400);
+}
+.drawn .pegasus .draw{
+  animation:draw 3s cubic-bezier(.6,.02,.25,1) forwards;
+}
+.drawn .pegasus .draw.d2{animation-delay:.35s}
+.drawn .pegasus .draw.d3{animation-delay:.7s}
+.drawn .pegasus .draw.d4{animation-delay:1.05s}
+.drawn .pegasus .glow{animation:emberFade 2.4s ease 1.6s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes emberFade{0%{opacity:0}60%{opacity:.9}100%{opacity:.45}}
+
+/* breathing bronze halo behind figure */
+.hero-figure::before{
+  content:"";position:absolute;width:60%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle, color-mix(in srgb,var(--bronze) 14%,transparent), transparent 68%);
+  filter:blur(20px);opacity:.5;z-index:-1;
+  animation:breathe 9s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.08);opacity:.62}}
+
+.scroll-hint{
+  position:absolute;left:50%;bottom:2.2rem;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.7rem;z-index:3;
+  font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--mineral-soft);
+}
+.scroll-hint .line{width:1px;height:46px;background:linear-gradient(var(--mineral-soft),transparent);overflow:hidden}
+.scroll-hint .line::after{content:"";display:block;width:100%;height:40%;background:var(--bronze);animation:trickle 2.6s ease-in-out infinite}
+@keyframes trickle{0%{transform:translateY(-100%)}60%,100%{transform:translateY(250%)}}
+
+/* ============================================================
+   MICRO-MANIFESTO
+   ============================================================ */
+.manifesto{background:var(--ivory-deep)}
+.manifesto .wrap{display:flex;justify-content:center;text-align:center}
+.manifesto p{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.5rem,3vw,2.35rem);line-height:1.5;
+  letter-spacing:-0.005em;color:var(--anchor);max-width:24ch;
+}
+.manifesto p span{display:block}
+.manifesto p .dim{color:var(--mineral)}
+
+/* ============================================================
+   SECTION HEADER
+   ============================================================ */
+.s-head{max-width:46rem;margin-bottom:clamp(3rem,7vh,5rem)}
+.s-head .eyebrow{display:block;margin-bottom:1.4rem}
+.s-head h2{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(2.1rem,4.4vw,3.4rem);line-height:1.1;
+  letter-spacing:-0.012em;color:var(--anchor);
+}
+.s-head h2 em{font-style:italic}
+.s-intro{margin-top:1.6rem;color:var(--mineral);max-width:38rem;font-size:1.06rem}
+
+/* ============================================================
+   APPROACH
+   ============================================================ */
+.reframe{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.7rem,3.6vw,2.7rem);line-height:1.34;
+  letter-spacing:-0.008em;color:var(--anchor);max-width:20ch;
+}
+.position-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4.5rem);
+  margin-top:clamp(3.5rem,8vh,6rem);align-items:start;
+}
+.position-row p{color:var(--mineral);font-size:1.05rem}
+.differentiator{
+  font-family:var(--serif);font-weight:300;font-style:italic;
+  font-size:clamp(1.25rem,2.4vw,1.7rem);line-height:1.5;color:var(--ink);
+}
+.differentiator span{display:block}
+.differentiator strong{font-weight:400;font-style:normal;color:var(--anchor)}
+
+/* Anatomy of Atmosphere */
+.anatomy{margin-top:clamp(4.5rem,10vh,7.5rem)}
+.anatomy-lede{max-width:48rem;margin-bottom:clamp(3rem,6vh,4rem)}
+.anatomy-title{
+  font-family:var(--serif);font-weight:300;font-style:italic;
+  font-size:clamp(1.9rem,3.6vw,2.75rem);
+  line-height:1.1;letter-spacing:-0.01em;color:var(--anchor);
+}
+.anatomy-sub{
+  margin-top:1.1rem;
+  font-size:clamp(1rem,1.4vw,1.15rem);
+  line-height:1.55;color:var(--mineral);max-width:40rem;
+}
+.dims{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--stone);border-block:1px solid var(--stone)}
+.dim{background:var(--ivory);padding:clamp(2rem,3.5vw,3rem) clamp(1.6rem,2.5vw,2.4rem)}
+.dim .idx{font-family:var(--serif);font-size:1.05rem;color:var(--bronze);font-style:italic}
+.dim h3{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.35rem,2.2vw,1.7rem);line-height:1.18;
+  color:var(--anchor);margin:1.1rem 0 .9rem;letter-spacing:-0.005em;
+}
+.dim p{color:var(--mineral);font-size:0.96rem;line-height:1.65}
+
+/* what it shapes — marker / title / description grid */
+.shapes{margin-top:clamp(3.5rem,7vh,5.5rem)}
+.shapes-eyebrow{display:block;text-align:center;margin-bottom:clamp(2.5rem,5vh,3.5rem)}
+.shapes-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  row-gap:clamp(2.8rem,6vh,4.2rem);
+  border-top:1px solid var(--stone);
+}
+.shape{
+  grid-column:span 2;
+  text-align:center;
+  padding:clamp(2.4rem,4vw,3.4rem) clamp(1.2rem,2.2vw,2.2rem) 0;
+  position:relative;
+}
+/* center the two items on the second row (items 4 and 5) */
+.shape:nth-child(4){grid-column:2 / span 2}
+.shape:nth-child(5){grid-column:4 / span 2}
+/* vertical hairlines: right edge of items 1,2 (top row) and item 4 (bottom pair) */
+.shape:nth-child(1)::after,
+.shape:nth-child(2)::after,
+.shape:nth-child(4)::after{
+  content:"";position:absolute;top:0;right:0;
+  width:1px;height:100%;background:var(--stone);
+}
+.shape-dot{
+  display:block;width:5px;height:5px;border-radius:50%;
+  background:var(--bronze);margin:0 auto clamp(1.3rem,2.4vh,1.7rem);
+}
+.shape h3{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.35rem,2.1vw,1.7rem);
+  color:var(--anchor);letter-spacing:-0.005em;line-height:1.15;
+  margin-bottom:1rem;
+}
+.shape p{
+  color:var(--mineral);font-size:0.96rem;line-height:1.62;
+  max-width:22rem;margin-inline:auto;
+}
+
+/* method 3 steps */
+.method{margin-top:clamp(4.5rem,10vh,7.5rem)}
+.steps{margin-top:3rem;border-top:1px solid var(--stone)}
+.step{
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(1.5rem,4vw,3.5rem);
+  padding:clamp(1.8rem,4vh,2.8rem) 0;border-bottom:1px solid var(--stone);
+  align-items:baseline;
+}
+.step .num{font-family:var(--serif);font-style:italic;font-weight:300;font-size:1.6rem;color:var(--bronze);min-width:2.4rem}
+.step h4{font-family:var(--serif);font-weight:400;font-size:clamp(1.4rem,2.4vw,1.85rem);color:var(--anchor);letter-spacing:-0.005em}
+.step .body{color:var(--mineral);font-size:1rem;max-width:42rem;padding-top:.3rem}
+.method-note{margin-top:2.4rem;font-style:italic;font-family:var(--serif);font-size:1.15rem;color:var(--ink)}
+
+/* credibility block */
+.credibility{
+  margin-top:clamp(4.5rem,10vh,7rem);
+  background:var(--anchor);color:var(--on-anchor);
+  padding:clamp(2.6rem,6vw,4.5rem);
+}
+.credibility .eyebrow{color:var(--bronze-soft)}
+.credibility p{color:var(--on-anchor-dim);max-width:46rem;margin-top:1.5rem;font-size:1.06rem;line-height:1.7}
+.credibility .principles{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  color:var(--on-anchor);
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about{background:var(--ivory-deep)}
+.about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:clamp(2.5rem,6vw,5rem);align-items:center}
+.about-mark{display:flex;align-items:center;justify-content:center}
+.about-mark svg{width:min(78%,300px);height:auto;overflow:visible}
+.about-mark .stroke{fill:none;stroke:var(--anchor);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.about-mark .hair{stroke-width:.55;opacity:.5}
+.about-mark .ember{stroke:var(--bronze);opacity:.8;stroke-width:.9}
+.about-mark .glow{stroke:var(--bronze);stroke-width:.9;opacity:.5}
+.about-body .signature{
+  font-family:var(--serif);font-style:italic;font-weight:300;
+  font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.4;color:var(--anchor);
+  margin-bottom:1.8rem;
+}
+.about-body p{color:var(--mineral);margin-bottom:1.2rem;font-size:1.04rem}
+.about-body p strong{color:var(--ink);font-weight:400}
+
+/* ============================================================
+   SESSIONS
+   ============================================================ */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1rem}
+.tier{
+  border:1px solid var(--stone);background:var(--ivory);
+  padding:clamp(2rem,3vw,2.6rem);display:flex;flex-direction:column;
+  transition:border-color .5s ease, transform .5s ease, box-shadow .5s ease;
+}
+.tier:hover{transform:translateY(-4px);box-shadow:0 22px 48px -30px rgba(43,47,51,.4)}
+.tier--feature{border-color:var(--anchor);position:relative}
+.tier--feature::before{
+  content:"Entry";position:absolute;top:0;right:1.6rem;transform:translateY(-50%);
+  background:var(--bronze);color:var(--ivory);
+  font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;
+  padding:.4em 1em;
+}
+.tier .t-name{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.2;color:var(--anchor);letter-spacing:-0.005em}
+.tier .t-role{margin-top:.9rem;color:var(--mineral);font-size:0.94rem;min-height:3.2em}
+.tier .t-price{
+  font-family:var(--serif);font-weight:300;font-size:2.5rem;color:var(--anchor);
+  margin:1.6rem 0 .2rem;line-height:1;
+}
+.tier .t-price .from{font-size:1rem;color:var(--mineral);font-style:italic}
+.tier .t-price--quote{font-size:1.5rem;font-style:italic;color:var(--mineral)}
+.tier .t-meta{font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--mineral-soft);margin-bottom:1.6rem}
+.tier .t-list{list-style:none;margin:0 0 2rem;flex:1}
+.tier .t-list li{
+  font-size:0.93rem;color:var(--ink);padding:.6em 0 .6em 1.4em;position:relative;
+  border-top:1px solid color-mix(in srgb,var(--stone) 60%,transparent);line-height:1.5;
+}
+.tier .t-list li:first-child{border-top:0}
+.tier .t-list li::before{content:"";position:absolute;left:0;top:1.05em;width:6px;height:6px;border:1px solid var(--bronze);transform:rotate(45deg)}
+.tier .btn{width:100%;justify-content:center}
+
+/* ============================================================
+   CASE STUDIES
+   ============================================================ */
+.cases{background:var(--anchor);color:var(--on-anchor)}
+.cases .s-head h2,.cases .reframe{color:var(--on-anchor)}
+.cases .s-head .eyebrow{color:var(--bronze-soft)}
+.cases .s-intro{color:var(--on-anchor-dim)}
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:color-mix(in srgb,var(--on-anchor) 14%,transparent);border:1px solid color-mix(in srgb,var(--on-anchor) 14%,transparent)}
+.case{background:var(--anchor);padding:clamp(2.2rem,4vw,3.4rem)}
+.case .c-context{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--on-anchor);margin-bottom:1.8rem;line-height:1.3}
+.case dl{display:grid;gap:1.4rem}
+.case dt{font-size:0.66rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--bronze-soft);margin-bottom:.5rem}
+.case dd{color:var(--on-anchor-dim);font-size:0.97rem;line-height:1.6}
+.case dd .outcome{display:block;padding-left:1.3rem;position:relative;margin-top:.5rem}
+.case dd .outcome::before{content:"—";position:absolute;left:0;color:var(--bronze-soft)}
+
+.quotes{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);margin-top:clamp(3.5rem,7vh,5rem)}
+.quote{border-left:1px solid var(--bronze-soft);padding-left:1.8rem}
+.quote p{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(1.2rem,2vw,1.5rem);line-height:1.45;color:var(--on-anchor)}
+.quote cite{display:block;margin-top:1.2rem;font-style:normal;font-size:0.74rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--on-anchor-dim)}
+
+/* ============================================================
+   CERTIFICATION (dormant)
+   ============================================================ */
+.cert .wrap{text-align:center;max-width:44rem}
+.cert .seal{width:88px;height:88px;margin:0 auto 2.4rem;position:relative;display:grid;place-items:center}
+.cert .seal svg{width:100%;height:100%;overflow:visible}
+.cert .seal .ring{fill:none;stroke:var(--bronze);stroke-width:1;opacity:.6}
+.cert .seal .ring-dash{fill:none;stroke:var(--bronze);stroke-width:.7;stroke-dasharray:2 5;opacity:.5;transform-origin:center;animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cert .seal .star{fill:none;stroke:var(--anchor);stroke-width:1;vector-effect:non-scaling-stroke}
+.cert h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.9rem,3.6vw,2.8rem);color:var(--anchor);letter-spacing:-0.01em}
+.cert h2 em{font-style:italic}
+.cert .teaser{margin-top:1.6rem;color:var(--mineral);font-size:1.08rem}
+.cert .status{
+  margin-top:2.2rem;display:inline-flex;align-items:center;gap:.7em;
+  font-size:0.68rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--mineral-soft);
+  border:1px solid var(--stone);padding:.7em 1.4em;
+}
+.cert .status .pip{width:5px;height:5px;border-radius:50%;background:var(--bronze);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{background:var(--ivory-deep)}
+.contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:clamp(2.5rem,6vw,5rem)}
+.contact-left .s-head{margin-bottom:2.5rem}
+.contact-left .intro{color:var(--mineral);font-size:1.06rem;margin-bottom:2.4rem;max-width:30rem}
+.start-three{border-top:1px solid var(--stone)}
+.start-three .lead{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--bronze);padding-top:1.8rem;display:block}
+.start-three ul{list-style:none;margin:1.2rem 0 0}
+.start-three li{display:flex;gap:1rem;padding:.7rem 0;color:var(--ink);font-size:0.98rem;align-items:baseline}
+.start-three li .n{font-family:var(--serif);font-style:italic;color:var(--bronze);font-size:1.1rem}
+
+form{display:grid;gap:1.5rem}
+.field{display:grid;gap:.55rem}
+.field label{font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--mineral)}
+.field input,.field select,.field textarea{
+  font-family:var(--sans);font-size:0.98rem;font-weight:300;color:var(--ink);
+  background:var(--ivory);border:1px solid var(--stone);
+  padding:0.95em 1.1em;width:100%;transition:border-color .35s ease;
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--anchor)}
+.field textarea{resize:vertical;min-height:6.5rem}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.2rem;margin-top:.5rem}
+.reassure{font-size:0.74rem;letter-spacing:0.06em;color:var(--mineral);display:flex;align-items:center;gap:.6em}
+.reassure .dot{width:3px;height:3px;border-radius:50%;background:var(--bronze)}
+.form-error{
+  margin-top:1.1rem;font-size:0.86rem;color:#8a5a4e;
+  letter-spacing:0.01em;
+}
+.form-alt{
+  margin-top:1.4rem;font-size:0.86rem;color:var(--mineral);letter-spacing:0.01em;
+}
+.form-alt a{
+  color:var(--anchor);border-bottom:1px solid var(--stone);
+  padding-bottom:1px;transition:border-color .35s ease;
+}
+.form-alt a:hover{border-bottom-color:var(--bronze)}
+.form-success{
+  border:1px solid var(--stone);background:var(--ivory);
+  padding:clamp(2.4rem,5vw,3.4rem);text-align:left;
+  animation:successIn 1s cubic-bezier(.2,.6,.2,1) both;
+}
+.form-success-dot{
+  display:block;width:6px;height:6px;border-radius:50%;
+  background:var(--bronze);margin-bottom:1.6rem;
+}
+.form-success-lead{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.2;
+  letter-spacing:-0.005em;color:var(--anchor);margin-bottom:.9rem;
+}
+.form-success-sub{
+  color:var(--mineral);font-size:1rem;line-height:1.6;max-width:34rem;
+}
+@keyframes successIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.form-success{animation:none}}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-list{margin-top:1rem;border-top:1px solid var(--stone)}
+.faq-item{border-bottom:1px solid var(--stone)}
+.faq-q{
+  width:100%;background:none;border:0;cursor:pointer;text-align:left;
+  display:flex;align-items:center;justify-content:space-between;gap:2rem;
+  padding:clamp(1.4rem,3vh,2rem) 0;
+  font-family:var(--serif);font-weight:400;font-size:clamp(1.2rem,2.1vw,1.55rem);
+  color:var(--anchor);letter-spacing:-0.005em;transition:color .3s;
+}
+.faq-q:hover{color:var(--bronze)}
+.faq-q .ic{position:relative;width:16px;height:16px;flex-shrink:0}
+.faq-q .ic::before,.faq-q .ic::after{content:"";position:absolute;background:var(--bronze);transition:transform .4s ease}
+.faq-q .ic::before{left:0;top:50%;width:100%;height:1px;transform:translateY(-50%)}
+.faq-q .ic::after{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%)}
+.faq-item.open .faq-q .ic::after{transform:translateX(-50%) scaleY(0)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s ease}
+.faq-a-inner{padding-bottom:clamp(1.4rem,3vh,2rem);color:var(--mineral);max-width:46rem;font-size:1.02rem}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{background:var(--anchor);color:var(--on-anchor);padding:clamp(4rem,9vh,6.5rem) var(--gutter) 2.5rem}
+.foot-wrap{max-width:var(--maxw);margin-inline:auto}
+.foot-line{
+  font-family:var(--serif);font-weight:300;font-style:italic;
+  font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.3;
+  color:var(--on-anchor);max-width:18ch;margin-bottom:clamp(3rem,7vh,5rem);
+}
+.foot-cols{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2.5rem;padding-bottom:3rem;border-bottom:1px solid color-mix(in srgb,var(--on-anchor) 16%,transparent)}
+.foot-brand{font-family:var(--serif);font-size:1.7rem;color:var(--on-anchor)}
+.foot-brand em{font-style:italic}
+.foot-nav{display:flex;flex-wrap:wrap;gap:1.4rem 2rem;align-items:center}
+.foot-nav a{font-size:0.8rem;letter-spacing:0.08em;color:var(--on-anchor-dim);transition:color .3s}
+.foot-nav a:hover{color:var(--on-anchor)}
+.foot-nav a.dormant{opacity:.6}
+.foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:2.5rem;font-size:0.72rem;letter-spacing:0.06em;color:var(--on-anchor-dim)}
+.lang{display:flex;gap:.4rem;align-items:center}
+.lang button{background:none;border:0;color:var(--on-anchor-dim);font-family:var(--sans);font-size:0.72rem;letter-spacing:0.1em;cursor:pointer;padding:.2em .4em;transition:color .3s}
+.lang button[aria-current="true"]{color:var(--on-anchor)}
+.lang button:hover{color:var(--bronze-soft)}
+.lang .sep{opacity:.4}
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}
+.reveal.d2{transition-delay:.16s}
+.reveal.d3{transition-delay:.24s}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:8rem;text-align:left}
+  .hero-figure{order:-1;margin-bottom:1rem}
+  .pegasus{width:min(80%,360px)}
+  .scroll-hint{display:none}
+  .position-row,.about-grid,.contact-grid,.case-grid,.quotes{grid-template-columns:1fr}
+  .dims,.tiers{grid-template-columns:1fr}
+  /* shapes: 2-up on tablet */
+  .shapes-grid{grid-template-columns:repeat(2,1fr)}
+  .shape,
+  .shape:nth-child(4),
+  .shape:nth-child(5){grid-column:auto}
+  .shape::after{display:none}
+  .shape:nth-child(odd)::after{
+    content:"";display:block;position:absolute;top:0;right:0;
+    width:1px;height:100%;background:var(--stone);
+  }
+  .about-mark{margin-bottom:1rem}
+  .about-grid{grid-template-rows:auto auto}
+}
+@media (max-width:720px){
+  .nav-links{
+    position:fixed;inset:0 0 0 auto;width:min(80vw,320px);
+    flex-direction:column;align-items:flex-start;justify-content:center;gap:1.8rem;
+    background:var(--ivory);padding:3rem 2.5rem;
+    transform:translateX(100%);transition:transform .5s cubic-bezier(.6,.02,.25,1);
+    box-shadow:-20px 0 60px -30px rgba(43,47,51,.5);
+  }
+  .nav-links.open{transform:none}
+  .nav-toggle{display:block;z-index:101}
+  .nav-links a{font-size:1rem}
+  .nav-links .btn{margin-top:.5rem}
+  .field-row{grid-template-columns:1fr}
+  .case dl{gap:1.1rem}
+  /* shapes: single column on mobile */
+  .shapes-grid{grid-template-columns:1fr;row-gap:0}
+  .shape{padding-block:clamp(1.8rem,4vh,2.4rem)}
+  .shape::after,
+  .shape:nth-child(odd)::after{display:none !important}
+  .shape:not(:last-child){border-bottom:1px solid var(--stone)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  .reveal{opacity:1;transform:none}
+  .pegasus .draw{stroke-dashoffset:0 !important}
+  .pegasus .glow{opacity:.45 !important}
+}
+
+/* ============================================================
+   SESSION PAGE — specific styles
+   ============================================================ */
+.session-hero{
+  padding:clamp(9rem,20vh,13rem) var(--gutter) clamp(3rem,7vh,5rem);
+  max-width:var(--maxw);margin-inline:auto;text-align:center;
+}
+.session-hero .eyebrow{display:block;margin-bottom:1.6rem}
+.session-hero h1{
+  font-family:var(--serif);font-weight:200;
+  font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.04;
+  letter-spacing:-0.018em;color:var(--anchor);
+}
+.session-hero h1 em{font-style:italic}
+.session-hero .lede{
+  margin:1.9rem auto 0;max-width:32rem;color:var(--mineral);
+  font-size:1.08rem;line-height:1.7;
+}
+.session-hero .back{
+  display:inline-block;margin-top:2rem;font-size:0.72rem;
+  letter-spacing:0.16em;text-transform:uppercase;color:var(--mineral-soft);
+  border-bottom:1px solid var(--stone);padding-bottom:2px;transition:border-color .35s;
+}
+.session-hero .back:hover{border-bottom-color:var(--bronze)}
+
+.session-section{padding-block:clamp(3.5rem,8vh,6rem);max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.session-narrow{max-width:60rem;margin-inline:auto}
+
+/* included — condensed reference, not re-explanation */
+.included-head{text-align:center;margin-bottom:clamp(2.5rem,5vh,3.5rem)}
+.included-head .eyebrow{display:block;margin-bottom:1.2rem}
+.included-head h2{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.8rem,3.6vw,2.6rem);color:var(--anchor);letter-spacing:-0.01em;line-height:1.12;
+}
+.included-meta{
+  text-align:center;color:var(--mineral);font-size:0.95rem;
+  letter-spacing:0.02em;margin-bottom:clamp(2.5rem,5vh,3.5rem);
+}
+.included-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;background:var(--stone);border:1px solid var(--stone);
+}
+.included-item{background:var(--ivory);padding:clamp(1.6rem,3vw,2.3rem)}
+.included-item h3{
+  font-family:var(--serif);font-weight:400;font-size:1.2rem;
+  color:var(--anchor);margin-bottom:.5rem;letter-spacing:-0.005em;
+}
+.included-item p{color:var(--mineral);font-size:0.92rem;line-height:1.55}
+
+/* what we need — the 3 elements, one line each */
+.need{background:var(--ivory-deep)}
+.need-head{text-align:center;margin-bottom:clamp(2.2rem,4vh,3rem)}
+.need-head .eyebrow{display:block;margin-bottom:1.1rem}
+.need-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.2rem);color:var(--anchor);letter-spacing:-0.005em}
+.need-list{max-width:44rem;margin-inline:auto;border-top:1px solid var(--stone)}
+.need-row{
+  display:grid;grid-template-columns:auto 1fr;gap:1.4rem;align-items:baseline;
+  padding:1.3rem 0;border-bottom:1px solid var(--stone);
+}
+.need-row .n{font-family:var(--serif);font-style:italic;color:var(--bronze);font-size:1.15rem;min-width:1.6rem}
+.need-row .t{color:var(--ink);font-size:1rem}
+.need-row .t strong{font-weight:400;color:var(--anchor)}
+
+/* payment — the heart of the page */
+.pay{max-width:var(--maxw);margin-inline:auto;padding:clamp(3.5rem,8vh,6rem) var(--gutter)}
+.pay-card{
+  max-width:40rem;margin-inline:auto;border:1px solid var(--anchor);
+  background:var(--ivory);padding:clamp(2.4rem,5vw,3.6rem);text-align:center;
+  position:relative;
+}
+.pay-card .tag{
+  position:absolute;top:0;left:50%;transform:translate(-50%,-50%);
+  background:var(--bronze);color:var(--ivory);font-size:0.6rem;
+  letter-spacing:0.2em;text-transform:uppercase;padding:.4em 1.1em;
+}
+.pay-card h2{
+  font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,2.6vw,1.9rem);
+  color:var(--anchor);letter-spacing:-0.005em;line-height:1.2;margin-bottom:.6rem;
+}
+.pay-card .sub{color:var(--mineral);font-size:0.92rem;margin-bottom:1.8rem}
+.pay-card .price{
+  font-family:var(--serif);font-weight:300;font-size:3.4rem;color:var(--anchor);
+  line-height:1;margin-bottom:.4rem;
+}
+.pay-card .price-meta{font-size:0.76rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--mineral-soft);margin-bottom:2rem}
+.pay-list{list-style:none;margin:0 0 2.2rem;text-align:left;max-width:26rem;margin-inline:auto;padding:0}
+.pay-list li{
+  font-size:0.92rem;color:var(--ink);padding:.55em 0 .55em 1.5rem;position:relative;
+  border-top:1px solid color-mix(in srgb,var(--stone) 60%,transparent);line-height:1.5;
+}
+.pay-list li:first-child{border-top:0}
+.pay-list li::before{content:"";position:absolute;left:0;top:1em;width:6px;height:6px;border:1px solid var(--bronze);transform:rotate(45deg)}
+.pay-button-wrap{margin-bottom:1.4rem;display:flex;justify-content:center}
+.pay-reassure{font-size:0.76rem;letter-spacing:0.04em;color:var(--mineral);line-height:1.5}
+.pay-reassure .dot{display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--bronze);vertical-align:middle;margin:0 .5em}
+
+/* mini FAQ — pre-purchase only */
+.mini-faq{max-width:52rem;margin-inline:auto;padding:clamp(3rem,7vh,5rem) var(--gutter)}
+.mini-faq-head{text-align:center;margin-bottom:clamp(2rem,4vh,3rem)}
+.mini-faq-head .eyebrow{display:block;margin-bottom:1.1rem}
+.mini-faq-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.2rem);color:var(--anchor)}
+
+/* closing */
+.session-close{text-align:center;padding:clamp(3.5rem,8vh,6rem) var(--gutter) clamp(1rem,3vh,2rem);max-width:44rem;margin-inline:auto}
+.session-close p{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.4;color:var(--anchor);margin-bottom:1.8rem}
+.session-close .price-line{font-size:0.76rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--mineral-soft)}
+
+@media (max-width:720px){
+  .included-grid{grid-template-columns:1fr}
+}
+
+</style>
+
+<body>
+<nav class="nav" id="nav">
+  <a href="/" class="brand">Briana Cello</a>
+  <div class="nav-links" id="navLinks">
+    <a href="/#approach">Approach</a>
+    <a href="/#sessions">Sessions</a>
+    <a href="/#cases">Case Studies</a>
+    <a href="/#contact">Contact</a>
+    <a href="/" class="btn btn--small">Return to site</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<header class="session-hero" id="top">
+  <span class="eyebrow reveal">The Signature Session</span>
+  <h1 class="reveal d1">A first harmonization, <em>within a space<br>you already know</em>.</h1>
+  <p class="lede reveal d2">You've read the approach. This is where it begins — a single session, performed remotely, on one space of your choosing.</p>
+  <a href="#reserve" class="back reveal d3">Reserve below ↓</a>
+</header>
+
+<div class="rule" style="max-width:var(--maxw);margin-inline:auto"></div>
+
+<!-- ========================= INCLUDED ========================= -->
+<section class="session-section">
+  <div class="included-head reveal">
+    <span class="eyebrow">What the session includes</span>
+    <h2>One space, refined in three movements.</h2>
+  </div>
+  <p class="included-meta reveal">One session · One space · Approximately 60–70 minutes of dedicated remote work</p>
+  <div class="included-grid session-narrow reveal">
+    <div class="included-item">
+      <h3>Clearing</h3>
+      <p>Residual atmospheric tension and perceptual heaviness are identified and cleared.</p>
+    </div>
+    <div class="included-item">
+      <h3>Rebalancing</h3>
+      <p>The environment is brought into a more balanced and coherent state.</p>
+    </div>
+    <div class="included-item">
+      <h3>Harmonizing</h3>
+      <p>Overall quality and resonance are strengthened through the harmonization protocol.</p>
+    </div>
+    <div class="included-item">
+      <h3>Session documentation</h3>
+      <p>A written record of the work and its observed register, provided afterwards.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WHAT WE NEED (3) ==================== -->
+<section class="need session-section" style="max-width:none;padding-inline:0">
+  <div style="max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)">
+    <div class="need-head reveal">
+      <span class="eyebrow">After you reserve</span>
+      <h2>Three things, that is all.</h2>
+    </div>
+    <div class="need-list reveal">
+      <div class="need-row"><span class="n">I</span><span class="t"><strong>The space</strong> — its name and full address</span></div>
+      <div class="need-row"><span class="n">II</span><span class="t"><strong>A visual reference</strong> — a recent photograph or floor plan</span></div>
+      <div class="need-row"><span class="n">III</span><span class="t"><strong>A reference date</strong> — construction, acquisition or first occupancy</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PAYMENT ========================= -->
+<section class="pay" id="reserve">
+  <div class="pay-card reveal">
+    <span class="tag">Entry session</span>
+    <h2>Signature Space Harmonization</h2>
+    <p class="sub">Your first environmental harmonization experience.</p>
+    <div class="price">$350</div>
+    <p class="price-meta">One space · Remote · Worldwide</p>
+    <ul class="pay-list">
+      <li>Environmental clearing and atmospheric refinement</li>
+      <li>Spatial rebalancing and coherence restoration</li>
+      <li>Proprietary frequency harmonization protocol</li>
+      <li>Performed remotely, wherever the space is</li>
+      <li>Session documentation included</li>
+    </ul>
+    <div class="pay-button-wrap">
+      <!-- Stripe Buy Button -->
+      <stripe-buy-button
+        buy-button-id="buy_btn_1TWkg9DoSqNfp1GWuKT978ob"
+        publishable-key="pk_live_51Sp3sFDoSqNfp1GWZQeWVE3lzkxSIoHoDNDsLPai4osN2SQpbfml1ibF5B3h22z4fkA0SL0qbjGEM2MBUa7aRdIQ008CrQ6wrk">
+      </stripe-buy-button>
+    </div>
+    <p class="pay-reassure">Secured by Stripe · SSL encrypted<span class="dot"></span>You'll be personally contacted within 24 hours</p>
+  </div>
+</section>
+
+<!-- ========================= MINI FAQ ========================= -->
+<section class="mini-faq">
+  <div class="mini-faq-head reveal">
+    <span class="eyebrow">Before you reserve</span>
+    <h2>Two quick answers.</h2>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-q">Is the session really performed remotely?<span class="ic"></span></button>
+      <div class="faq-a"><div class="faq-a-inner">Yes, entirely. The work is carried out remotely through a proprietary transmission methodology and does not require your presence in the space. You'll receive session documentation once it's complete.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What if I'm not sure my space is suitable?<span class="ic"></span></button>
+      <div class="faq-a"><div class="faq-a-inner">Residential, professional and hospitality spaces of most sizes are suitable. If you're unsure, write to us before reserving and we'll tell you honestly whether the session fits your environment.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= CLOSING ========================= -->
+<section class="session-close">
+  <p class="reveal">A single session. A familiar space. A discreet refinement of its atmosphere.</p>
+  <a href="#reserve" class="btn btn--solid reveal">Reserve the session — $350</a>
+  <p class="price-line reveal" style="margin-top:1.6rem">Remote · Available worldwide</p>
+</section>
+
+<footer>
+  <div class="foot-wrap">
+    <p class="foot-line reveal">The quality of a space is often felt before it is named.</p>
+
+    <div class="foot-cols">
+      <a href="/" class="foot-brand" style="text-decoration:none">Briana Cello</a>
+      <nav class="foot-nav">
+        <a href="/#approach">Approach</a>
+        <a href="/#sessions">Sessions</a>
+        <a href="/#cases">Case Studies</a>
+        <a href="/#contact">Contact</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/">Return to site</a>
+      </nav>
+    </div>
+
+    <div class="foot-base">
+      <span>Briana Cello — Atmosphere Advisory · © Briana Cello</span>
+      <span class="lang" aria-label="Language">
+        <button aria-current="true">EN</button><span class="sep">·</span>
+        <button title="Coming soon">IT</button><span class="sep">·</span>
+        <button title="Coming soon">FR</button>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script async src="https://js.stripe.com/v3/buy-button.js"></script>
+<script>
+/* ---- nav scrolled state ---- */
+const nav=document.getElementById('nav');
+const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>40);
+onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+/* ---- mobile menu ---- */
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{
+  const open=links.classList.toggle('open');
+  toggle.classList.toggle('open',open);
+  toggle.setAttribute('aria-expanded',open);
+});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  links.classList.remove('open');toggle.classList.remove('open');toggle.setAttribute('aria-expanded','false');
+}));
+
+/* ---- reveal on scroll ---- */
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:0.16,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---- FAQ accordion ---- */
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.closest('.faq-item');
+    const a=item.querySelector('.faq-a');
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o=>{
+      o.classList.remove('open');o.querySelector('.faq-a').style.maxHeight=null;
+    });
+    if(!isOpen){item.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}
+  });
+});
+</script>
+</body>
+</html>
